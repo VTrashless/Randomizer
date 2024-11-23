@@ -7,3 +7,4 @@ description: You can now randomize various aspects of the game, such as block dr
 commands:
   randomize:
   backpack:
+  settings:

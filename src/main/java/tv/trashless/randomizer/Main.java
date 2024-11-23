@@ -5,7 +5,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import tv.trashless.randomizer.commands.BackpackCommand;
 import tv.trashless.randomizer.commands.RandomizeCommand;
+import tv.trashless.randomizer.commands.SettingsCommand;
 import tv.trashless.randomizer.listeners.*;
+import tv.trashless.randomizer.utils.Settings;
+import tv.trashless.randomizer.utils.SettingsInventory;
 import tv.trashless.randomizer.utils.SharedBackpack;
 import tv.trashless.randomizer.utils.Randomizer;
 
@@ -27,8 +30,15 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        /*
+            TODO:
+
+         */
+
         Randomizer.loadRandomizedItems();
         SharedBackpack.loadSharedBackpack();
+        Settings.loadAll();
+        SettingsInventory.loadInventory();
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new JoinListener(), this);
@@ -37,9 +47,11 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new BlockDropItemListener(), this);
         pluginManager.registerEvents(new BlockBreakListener(), this);
         pluginManager.registerEvents(new EntityDeathListener(), this);
+        pluginManager.registerEvents(new InventoryClickListener(), this);
 
         this.getCommand("randomize").setExecutor(new RandomizeCommand());
         this.getCommand("backpack").setExecutor(new BackpackCommand());
+        this.getCommand("settings").setExecutor(new SettingsCommand());
 
         Bukkit.broadcastMessage(getPrefix() + "§7Plugin enabled!");
     }
@@ -47,6 +59,7 @@ public final class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         SharedBackpack.saveBackpack();
+        Settings.saveAll();
 
         Bukkit.broadcastMessage(getPrefix() + "§7Disabling plugin...");
     }
