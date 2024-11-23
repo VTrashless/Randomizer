@@ -1,0 +1,9 @@
+name: Randomizer
+version: '1.0-SNAPSHOT'
+main: tv.trashless.randomizer.Main
+api-version: '1.21'
+authors: [ Trashless ]
+description: You can now randomize various aspects of the game, such as block drops or chest loot tables!
+commands:
+  randomize:
+  backpack:
