@@ -9,13 +9,13 @@ import java.util.HashMap;
 public class Randomizer {
     private static final SecureRandom RANDOM = new SecureRandom();
     private static final HashMap<Material, Material> RANDOMIZED_ITEMS = new HashMap<>();
-    private static final Config CONFIG = new Config("randomized_items");
+    private static final Config RANDOMIZER_CONFIG = new Config("randomized_items");
 
     public static void loadRandomizedItems() {
-        if (!CONFIG.getKeys(false).isEmpty()) {
+        if (!RANDOMIZER_CONFIG.getKeys(false).isEmpty()) {
 
-            for (String key : CONFIG.getKeys(false)) {
-                RANDOMIZED_ITEMS.put(Material.valueOf(key),Material.valueOf((String) CONFIG.get(key)));
+            for (String key : RANDOMIZER_CONFIG.getKeys(false)) {
+                RANDOMIZED_ITEMS.put(Material.valueOf(key),Material.valueOf((String) RANDOMIZER_CONFIG.get(key)));
             }
 
         } else {
@@ -24,26 +24,42 @@ public class Randomizer {
     }
 
     public static void createRandomizedItems() {
+
         for (Material material : Material.values()) {
-            int r;
-            Material randomMaterial;
 
-            do {
-                r = RANDOM.nextInt(Material.class.getEnumConstants().length);
-                randomMaterial = Material.class.getEnumConstants()[r];
-            }
-            while (!randomMaterial.isItem());
-            RANDOMIZED_ITEMS.put(material, randomMaterial);
+            if (material.isItem()) {
+                int r;
+                Material randomMaterial;
 
-            try {
-                CONFIG.set(material.name(), RANDOMIZED_ITEMS.get(material).name());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                do {
+                    r = RANDOM.nextInt(Material.class.getEnumConstants().length);
+                    randomMaterial = Material.class.getEnumConstants()[r];
+                }
+                while (!randomMaterial.isItem());
+                RANDOMIZED_ITEMS.put(material, randomMaterial);
+
+                try {
+                    RANDOMIZER_CONFIG.set(material.name(), randomMaterial.name());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
 
     public static HashMap<Material, Material> getRandomizedItems() {
         return RANDOMIZED_ITEMS;
+    }
+
+    public static Config getConfig() {
+        return RANDOMIZER_CONFIG;
+    }
+
+    public static void saveRandomizedItems() {
+        try {
+            RANDOMIZER_CONFIG.save();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

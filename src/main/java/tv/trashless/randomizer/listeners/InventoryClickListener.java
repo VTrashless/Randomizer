@@ -7,13 +7,16 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import tv.trashless.randomizer.Main;
 import tv.trashless.randomizer.utils.Randomizer;
 import tv.trashless.randomizer.utils.Settings;
-import tv.trashless.randomizer.utils.SettingsInventory;
+import tv.trashless.randomizer.inventories.SettingsInventory;
+
+import java.util.Objects;
 
 public class InventoryClickListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent clickEvent) {
-        if (clickEvent.getClickedInventory().equals(SettingsInventory.getInventory())) {
+
+        if (Objects.equals(clickEvent.getClickedInventory(), SettingsInventory.getInventory())) {
             clickEvent.setCancelled(true);
 
             switch (clickEvent.getSlot()) {

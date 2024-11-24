@@ -1,10 +1,11 @@
-package tv.trashless.randomizer.utils;
+package tv.trashless.randomizer.inventories;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import tv.trashless.randomizer.utils.Settings;
 
 public class SettingsInventory {
     private static final Inventory SETTINGS_INVENTORY = Bukkit.createInventory(null, 54, "Settings");
@@ -43,7 +44,7 @@ public class SettingsInventory {
     private static final ItemMeta DISABLED_META = DISABLED.getItemMeta();
     private static final ItemMeta COMING_SOON_META = COMING_SOON.getItemMeta();
 
-    public static void loadInventory() {
+    public static void create() {
         BLOCK_DROPS_META.setDisplayName("§7Toggle §9§lBlock§3§lDrop§b§lRandomizer§7!");
         MOB_DROPS_META.setDisplayName("§7Toggle §9§lMob§3§lDrop§b§lRandomizer§7!");
         LOOT_TABLES_META.setDisplayName("§7Toggle §9§lLoot§3§lTable§b§lRandomizer§7!");
@@ -77,18 +78,18 @@ public class SettingsInventory {
         SETTINGS_INVENTORY.setItem(SLOT_TRADES, TRADES_ITEM);
         SETTINGS_INVENTORY.setItem(SLOT_RANDOMIZE, RANDOMIZE_ITEM);
 
-        updateInventory();
+        update();
     }
 
-    public static void updateInventory() {
-        putEnabledOrDisabled("randomize_block_drops", SLOT_BLOCK_DROPS_INDICATOR);
-        putEnabledOrDisabled("randomize_mob_drops", SLOT_MOB_DROPS_INDICATOR);
-        putEnabledOrDisabled("randomize_loot_tables", SLOT_LOOT_TABLES_INDICATOR);
-        putEnabledOrDisabled("randomize_recipes", SLOT_RECIPES_INDICATOR);
-        putEnabledOrDisabled("randomize_trades", SLOT_TRADES_INDICATOR);
+    public static void update() {
+        updateIndicator("randomize_block_drops", SLOT_BLOCK_DROPS_INDICATOR);
+        updateIndicator("randomize_mob_drops", SLOT_MOB_DROPS_INDICATOR);
+        updateIndicator("randomize_loot_tables", SLOT_LOOT_TABLES_INDICATOR);
+        updateIndicator("randomize_recipes", SLOT_RECIPES_INDICATOR);
+        updateIndicator("randomize_trades", SLOT_TRADES_INDICATOR);
     }
 
-    private static void putEnabledOrDisabled(String path, int indicatorSlot) {
+    private static void updateIndicator(String path, int indicatorSlot) {
         if (Settings.getConfig().contains(path)) {
             if ((boolean) Settings.getConfig().get(path)) {
                 SETTINGS_INVENTORY.setItem(indicatorSlot, ENABLED);
@@ -101,7 +102,7 @@ public class SettingsInventory {
     }
 
     public static Inventory getInventory() {
-        updateInventory();
+        update();
         return SETTINGS_INVENTORY;
     }
 }

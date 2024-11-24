@@ -30,6 +30,7 @@ public class Settings {
     public static void save(String path, boolean state) {
         try {
             SETTINGS_CONFIG.set(path, state);
+            SETTINGS_CONFIG.save();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

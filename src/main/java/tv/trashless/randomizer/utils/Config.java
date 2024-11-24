@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Set;
 
 public class Config {
-    private File file;
-    private YamlConfiguration config;
+    private final File file;
+    private final YamlConfiguration config;
 
     public Config(String configName) {
         File dir = new File("./plugins/Randomizer/");
@@ -34,12 +34,15 @@ public class Config {
 
     public void set(String path, Object value) throws IOException {
         config.set(path, value);
-        config.save(file);
     }
 
     public Object get(String path) {
         if (contains(path)) return config.get(path);
         return null;
+    }
+
+    public void save() throws IOException {
+        config.save(file);
     }
 
     public Set<String> getKeys(boolean deep) {
