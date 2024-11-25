@@ -28,6 +28,10 @@ public class InventoryClickListener implements Listener {
                     Randomizer.toggleSetting("randomize_mob_drops");
                 }
 
+                case SettingsGUI.SLOT_FISHING -> {
+                    Randomizer.toggleSetting("randomize_fishing");
+                }
+
                 case SettingsGUI.SLOT_RANDOMIZER_TYPE -> {
                     Bukkit.broadcastMessage(Main.getPrefix() + "§7Toggled randomizer type! Now active: §9" + Randomizer.toggleActiveType());
                 }

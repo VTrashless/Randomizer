@@ -21,10 +21,10 @@ public class Randomizer {
     public static void loadSettings() {
         SETTINGS.put("randomize_block_drops", false);
         SETTINGS.put("randomize_mob_drops", false);
-        //SETTINGS.put("randomize_loot_tables");
-        //SETTINGS.put("randomize_recipes");
-        //SETTINGS.put("randomize_trades");
-        //SETTINGS.put("randomize_fishing");
+        //SETTINGS.put("randomize_loot_tables", false);
+        //SETTINGS.put("randomize_recipes", false);
+        //SETTINGS.put("randomize_trades", false);
+        SETTINGS.put("randomize_fishing", false);
         SETTINGS.put("randomizer_type", true);
 
         for (String setting : SETTINGS.keySet()) {

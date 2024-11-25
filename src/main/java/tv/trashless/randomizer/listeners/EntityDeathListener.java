@@ -12,7 +12,6 @@ public class EntityDeathListener implements Listener {
 
     @EventHandler
     public void onEntityDropItem(EntityDeathEvent entityDeathEvent) {
-
         if (Randomizer.getBooleanSetting("randomize_mob_drops")) {
             List<ItemStack> droppedItems = entityDeathEvent.getDrops();
 
