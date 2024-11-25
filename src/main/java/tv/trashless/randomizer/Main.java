@@ -49,6 +49,8 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new BlockDropItemListener(), this);
         pluginManager.registerEvents(new BlockBreakListener(), this);
         pluginManager.registerEvents(new EntityDeathListener(), this);
+        pluginManager.registerEvents(new PlayerFishListener(), this);
+
         pluginManager.registerEvents(new InventoryClickListener(), this);
 
         this.getCommand("randomize").setExecutor(new RandomizeCommand());
