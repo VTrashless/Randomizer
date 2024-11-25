@@ -6,30 +6,27 @@ import org.bukkit.plugin.java.JavaPlugin;
 import tv.trashless.randomizer.commands.BackpackCommand;
 import tv.trashless.randomizer.commands.RandomizeCommand;
 import tv.trashless.randomizer.commands.SettingsCommand;
+import tv.trashless.randomizer.inventories.Items;
 import tv.trashless.randomizer.listeners.*;
-import tv.trashless.randomizer.utils.Settings;
-import tv.trashless.randomizer.inventories.SettingsInventory;
+import tv.trashless.randomizer.inventories.SettingsGUI;
 import tv.trashless.randomizer.inventories.SharedBackpackInventory;
 import tv.trashless.randomizer.utils.Randomizer;
 
-import javax.annotation.Nonnull;
-import java.util.logging.Logger;
-
 public final class Main extends JavaPlugin {
     static Main instance;
-    private final Logger logger = Bukkit.getLogger();
 
     @Override
     public void onLoad() {
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "§7Loading plugin...");
 
-        //LOAD CONFIGS & INVENTORIES
+        //LOAD CONFIGS
         Randomizer.loadRandomizedItems();
-        Settings.loadAll();
+        Randomizer.loadSettings();
         SharedBackpackInventory.loadContents();
 
-        //CREATE INVENTORIES
-        SettingsInventory.create();
+        //CREATE ITEMS & INVENTORIES
+        Items.create();
+        SettingsGUI.create();
 
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "§7Plugin loaded!");
     }
@@ -37,7 +34,10 @@ public final class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         /*
-            TODO:
+            TODO:   - LootTableRandomizer
+                    - RecipeRandomizer
+                    - TradeRandomizer
+                    - FishingRandomizer
          */
 
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "§7Enabling plugin...");
@@ -62,11 +62,10 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "§7Disabling plugin...");
 
-        //SAVE CONFIGS
-        Settings.saveAll();
+        //SAVE CONFIGS & INVENTORIES
         Randomizer.saveRandomizedItems();
-
-        SharedBackpackInventory.save();
+        Randomizer.saveSettings();
+        SharedBackpackInventory.saveContents();
 
         Bukkit.getConsoleSender().sendMessage(getPrefix() + "§7Plugin disabled!");
     }
@@ -77,11 +76,5 @@ public final class Main extends JavaPlugin {
 
     public static String getPrefix() {
         return "§8[§6Randomizer§8] ";
-    }
-
-    @Nonnull
-    @Override
-    public Logger getLogger() {
-        return logger;
     }
 }

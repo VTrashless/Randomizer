@@ -26,7 +26,7 @@ public class SharedBackpackInventory {
         }
     }
 
-    public static void save() {
+    public static void saveContents() {
 
         for (int slot = 0; slot < SHARED_BACKPACK_INVENTORY.getSize(); slot++) {
             String slotAsString = String.valueOf(slot);
